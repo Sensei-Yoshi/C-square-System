@@ -14,7 +14,7 @@ constexpr uint8_t SS_PIN2 = 7;
 constexpr uint8_t SS_PIN3 = 9;
 #define numberOfPackages 6
 byte ssPins[] = {SS_PIN1, SS_PIN2, SS_PIN3};
-MFRC522 readers[3];
+MFRC522 readers[NR_OF_READERS];
 
 sllib led1(5);
 sllib led2(4);
@@ -67,12 +67,11 @@ void setup() {
 void loop()
 {
   getCurrentGPSLocation();
-  int packageSpot = 0;
 
-  for (packageSpot = 0; packageSpot <= 2; packageSpot++)
+  for (uint8_t reader = 0; reader < NR_OF_READERS; reader++)
   {
-    String packageId = readpackageID(readers[packageSpot]);
-    checkpackageforDelivery(packageSpot, packageId);
+    String packageId = readpackageID(readers[reader]);
+    checkpackageforDelivery(reader, packageId);
   }
   resetLed();
 }
@@ -100,11 +99,11 @@ void getCurrentGPSLocation() {
 String readpackageID(MFRC522 rfid) {
 
   String packageId;
-  SPI.beginTransaction(SPISettings(400000, MSBFIRST, SPI_MODE0));
+  //SPI.beginTransaction(SPISettings(400000, MSBFIRST, SPI_MODE0));
   digitalWrite(RST_PIN, HIGH);
   rfid.PCD_Init();
   //rfid.PCD_DumpVersionToSerial();
-  //SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
+  SPI.beginTransaction(SPISettings(2000000, MSBFIRST, SPI_MODE0));
   if (rfid.PICC_IsNewCardPresent() && rfid.PICC_ReadCardSerial()) {
 
     packageId = printDec(rfid.uid.uidByte, rfid.uid.size);// + String(rfid.uid.uidByte[1]) + String(rfid.uid.uidByte[2]) + String(rfid.uid.uidByte[3]);
@@ -155,7 +154,7 @@ void checkpackageforDelivery(int packageSpot, String packageId)
 }
 
 void blinkLed(int packageSpot) {
-  leds[packageSpot].blinkSingle(0.1);
+  leds[packageSpot].blinkSingle(1);
 }
 
 void resetLed() {
