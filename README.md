@@ -1,2 +1,4 @@
-# C-square-System
-Roboraptors Project for Cargo Connect 2021-2022
+# What is C-Square-System
+The C Square System, is an award winning project which has been selected for the Global Innovation Award competion, an international competition where people with the best STEM project win various awards. The C Square System aims to improve the last mile delivery because delivery drivers experience trouble finding the right packages, high risks of heat strokes in 120 degrees Fahrenheit temperatures, and having to re-deliver misplaced packages.
+# How does it work?
+The C square consists of 2 independent systems for our 2 shelves. Each system has 3 RFID readers, 3 RFID Tags, 3 LEDS, an Arduino, and GPS. When the truck stops at a delivery address, the Arduino uses the GPS to figure out where it is. Then the RFID readers read the package’s unique ID. Once it has that information it uses its internal database to check which package is for the right address. Once it finds the correct package, it will light the LED closest to the package. All the driver needs to do is walk into the back of the truck, find the LED blinking, and deliver that package, just like that.
