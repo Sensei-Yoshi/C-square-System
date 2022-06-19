@@ -143,8 +143,7 @@ void checkpackageforDelivery(int packageSpot, String packageId)
       Serial.println(latDifference, 6);
       Serial.print("longDifference");
       Serial.println(longDifference, 6);
-      if ((latDifference <= 50000) && (longDifference <= 500000)) //if distance is in radius of 2 Meters, Value needs to be 0.00005 or 0.005
-      {
+      if ((latDifference <= 0.0004) && (longDifference <= 0.0004)) // Through testing, 0.0004 degrees, is a good radius to put around a delivering house. 
         Serial.println("Blinking");
         blinkLed(packageSpot);
       }
